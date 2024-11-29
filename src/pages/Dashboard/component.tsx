@@ -39,7 +39,7 @@ export default function Component(props: ComponentProps) {
             display={{ base: "none", xl: "block", lg: "none", md: "none", sm: "none" }}
         >
             <VStack
-                width={'100%'} height={'100%'}
+                width={'175px'} height={'100%'}
                 justifyContent={"center"} alignContent={"center"}
             >
                 <Center>
