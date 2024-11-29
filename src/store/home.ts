@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getAll } from '@/services/all';
-import { Item } from "@/services/all.types";
+import { getNewest } from '@/services/newest';
+import { Item } from "@/services/newest.types";
 
 export enum STATUS { IDLE, LOADING, SUCCESS, FAILED }
 
@@ -11,11 +11,11 @@ export interface State {
 }
 
 export interface Actions {
-    doGetAll: typeof doGetAll,
+    doGetNewest: typeof doGetNewest,
 }
 
 // Definisci la chiamata asincrona per ottenere i dati dal server
-const doGetAll = createAsyncThunk('home/doGetAll', async () => await getAll());
+const doGetNewest = createAsyncThunk('home/doGetNewest', async () => await getNewest());
 
 const homeSlice = createSlice({
     name: 'home',
@@ -43,14 +43,14 @@ const homeSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(doGetAll.pending, (state) => {
+            .addCase(doGetNewest.pending, (state) => {
                 state.status = STATUS.LOADING;
             })
-            .addCase(doGetAll.fulfilled, (state, action) => {
+            .addCase(doGetNewest.fulfilled, (state, action) => {
                 state.status = STATUS.SUCCESS;
                 state.occurrences = action.payload.data;
             })
-            .addCase(doGetAll.rejected, (state, action) => {
+            .addCase(doGetNewest.rejected, (state, action) => {
                 state.status = STATUS.FAILED;
                 state.error = action.error.message;
             });
@@ -59,7 +59,7 @@ const homeSlice = createSlice({
 
 export const actions = {
     ...homeSlice.actions,
-    doGetNewest: doGetAll,
+    doGetNewest,
 };
 
 export default homeSlice.reducer;

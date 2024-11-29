@@ -61,7 +61,7 @@ export default function App() {
                 <meta charSet="UTF-8" />
                 <link rel="icon" type="image/svg+xml" href={imgUrl} />
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                <title>Boilerplate</title>
+                <title>Anime Watch</title>
             </Helmet>
             <RouterProvider router={createBrowserRouter(routes, {
                 // https://reactrouter.com/en/main/routers/create-browser-router#optsfuture
