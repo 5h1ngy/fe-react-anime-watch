@@ -1,15 +1,19 @@
 import React from "react";
-import { Card, Image } from "@chakra-ui/react"
-import { Button } from "@/components/Chakra/button"
+import { Card, Flex, Image } from "@chakra-ui/react"
+import { IconButton } from "@chakra-ui/react"
+import { FcLike } from "react-icons/fc";
+import { FcViewDetails } from "react-icons/fc";
 
 export interface Props {
+  id: string;
   thumbnail: string;
   title: string;
   type: string;
+  goToDetails: Function;
 }
 
-const Component: React.FC<Props> = ({ thumbnail, title, type }) => (
-  <Card.Root maxW={'250px'} overflow="hidden">
+const Component: React.FC<Props> = ({ id, thumbnail, title, type, goToDetails }) => (
+  <Card.Root maxW={'200px'} overflow="hidden">
 
     <Image
       src={thumbnail}
@@ -21,11 +25,17 @@ const Component: React.FC<Props> = ({ thumbnail, title, type }) => (
       <Card.Description>{type}</Card.Description>
     </Card.Body>
 
-    <Card.Footer gap="2">
-      <Button variant="solid">Buy now</Button>
-      <Button variant="ghost">Add to cart</Button>
+    <Card.Footer>
+      <Flex gap="2" wrap='wrap'>
+        <IconButton aria-label="Details" variant="surface" size="xs">
+          <FcViewDetails onClick={() => goToDetails(id)} />
+        </IconButton>
+        <IconButton aria-label="Add to my list" variant="ghost" size="xs">
+          <FcLike />
+        </IconButton>
+      </Flex>
     </Card.Footer>
-    
+
   </Card.Root>
 )
 

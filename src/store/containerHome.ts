@@ -35,8 +35,8 @@ const homeSlice = createSlice({
         occurrences: [],
         page: 1,
         limit: 10,
-        total: 0,
-        totalPages: 0,
+        total: 10,
+        totalPages: 1,
         types: [],
     } as State,
     reducers: {

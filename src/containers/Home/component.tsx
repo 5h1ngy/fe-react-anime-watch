@@ -3,13 +3,14 @@ import { useEffect } from "react";
 import { Center, createListCollection } from "@chakra-ui/react"
 import { Text, HStack, Flex, Spacer } from "@chakra-ui/react";
 
-import { PaginationItems, PaginationNextTrigger, PaginationPageText, PaginationPrevTrigger, PaginationRoot } from "@/components/Chakra/pagination"
-import { SelectContent, SelectItem, SelectLabel, SelectRoot, SelectTrigger, SelectValueText } from "@/components/Chakra/select"
+import { PaginationNextTrigger, PaginationPageText, PaginationPrevTrigger, PaginationRoot } from "@/components/Chakra/pagination"
+import { SelectContent, SelectItem, SelectRoot, SelectTrigger, SelectValueText } from "@/components/Chakra/select"
 import { BreadcrumbCurrentLink, BreadcrumbLink, BreadcrumbRoot } from "@/components/Chakra/breadcrumb"
 
 import { History } from "@/store/pageLanding";
 import { STATUS } from "@/store/containerHome";
 import { Item } from "@/services/newest.types";
+import withRouter, { WithRouterProps } from "@/hocs/withRouter";
 
 import Card from "@/components/Card"
 
@@ -32,7 +33,7 @@ export interface Props {
     };
 }
 
-const Component: React.FC<Props> = ({ state, actions, }) => {
+const Component: React.FC<Props & WithRouterProps> = ({ router, state, actions, }) => {
 
     const pages = createListCollection({
         items: [
@@ -49,9 +50,13 @@ const Component: React.FC<Props> = ({ state, actions, }) => {
         actions.doGetNewest({ page, limit: pageSize });
     }
 
-    function onSizeChange(args) {
+    function onSizeChange(args: any) {
         const { value: pageSize } = args as { items: typeof Proxy[]; value: string[] };
         actions.doGetNewest({ page: state.page, limit: parseFloat(pageSize[0]) });
+    }
+
+    function onGoToDetails(id: string) {
+        router.navigate(`/details/${id}`)
     }
 
     {/** Navigation History Component */ }
@@ -88,9 +93,11 @@ const Component: React.FC<Props> = ({ state, actions, }) => {
 
     const Cards: React.FC = () => <Flex wrap={'wrap'} gap='2rem' align="stretch" justify={"center"}>
         {state.occurrences.map(occurrence => <Card key={crypto.randomUUID()}
+            id={occurrence.id}
             thumbnail={occurrence.image.thumbnail}
             title={occurrence.title}
             type={occurrence.type}
+            goToDetails={onGoToDetails}
         />)}
     </Flex>
 
@@ -126,4 +133,4 @@ const Component: React.FC<Props> = ({ state, actions, }) => {
     </>
 }
 
-export default Component;
+export default withRouter(Component);

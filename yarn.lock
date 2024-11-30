@@ -880,15 +880,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@heroicons/react@npm:^2.1.5":
-  version: 2.1.5
-  resolution: "@heroicons/react@npm:2.1.5"
-  peerDependencies:
-    react: ">= 16"
-  checksum: 10c0/d0ca2d017545da103ed8e90e9e6679d46329c1b09bb4c06ff509b0fe7cfbba7034409ea24b0469fabd2a0a9b144e8e717f58de924615e0b0a1bed7b51fcc5940
-  languageName: node
-  linkType: hard
-
 "@humanfs/core@npm:^0.19.1":
   version: 0.19.1
   resolution: "@humanfs/core@npm:0.19.1"
@@ -3936,7 +3927,6 @@ __metadata:
     "@chromatic-com/storybook": "npm:^3.2.2"
     "@emotion/react": "npm:^11.13.3"
     "@eslint/js": "npm:^9.14.0"
-    "@heroicons/react": "npm:^2.1.5"
     "@reduxjs/toolkit": "npm:^2.3.0"
     "@storybook/addon-essentials": "npm:^8.4.2"
     "@storybook/addon-interactions": "npm:^8.4.2"
