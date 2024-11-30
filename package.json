@@ -1,9 +1,40 @@
 {
   "name": "fe-react-anime-watch",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
+  "version": "1.0.0",
+  "license": "MIT",
+  "description": "A modern React application to track and manage your watched anime. Built with Chakra UI for a sleek and accessible design system, Redux Toolkit for robust state management, and Storybook for component documentation and testing. Developed using TypeScript and Vite for optimal performance and scalability",
+  "keywords": [
+    "react",
+    "anime",
+    "anime-tracking",
+    "anime-watch",
+    "watchlist",
+    "chakra-ui",
+    "redux-toolkit",
+    "vite",
+    "storybook",
+    "typescript",
+    "state-management",
+    "modern-ui",
+    "frontend",
+    "web-application"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/5h1ngy/fe-react-anime-watch.git"
+  },
+  "author": "5h1ngy",
+  "engines": {
+    "node": ">=20.18.0",
+    "yarn": ">=4.5.1"
+  },
   "packageManager": "yarn@4.5.1",
+  "type": "module",
+  "eslintConfig": {
+    "extends": [
+      "plugin:storybook/recommended"
+    ]
+  },
   "scripts": {
     "mock": "vite --host 0.0.0.0 --port 5173 --mode mock",
     "dev": "vite --host 0.0.0.0 --port 5173 --mode dev",
@@ -54,10 +85,5 @@
     "typescript-eslint": "^8.13.0",
     "vite": "^5.4.10",
     "vite-tsconfig-paths": "^5.1.2"
-  },
-  "eslintConfig": {
-    "extends": [
-      "plugin:storybook/recommended"
-    ]
   }
 }
