@@ -1,5 +1,5 @@
 {
-  "name": "fe-react-components",
+  "name": "fe-react-anime-watch",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -9,8 +9,8 @@
     "dev": "vite --host 0.0.0.0 --port 5173 --mode dev",
     "build": "tsc -b && vite build",
     "start": "vite preview",
-    "start:storybook": "storybook dev -p 6006 --no-open",
-    "build:storybook": "storybook build",
+    "storybook": "storybook dev -p 6006 --no-open",
+    "preview": "storybook build",
     "clean": "rm -rfdv dist node_modules",
     "lint": "eslint ."
   },
