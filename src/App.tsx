@@ -23,7 +23,7 @@ const routes = [
     {
         id: "root",
         path: "/",
-        element: withDynamicImport('Dashboard', <h1> Loading </h1>).pages({
+        element: withDynamicImport('Landing', <h1> Loading </h1>).pages({
             children: <Outlet />,
             navigationHistory: [
                 { label: 'Test-1', current: false },

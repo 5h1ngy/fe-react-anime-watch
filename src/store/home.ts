@@ -6,6 +6,7 @@ export enum STATUS { IDLE, LOADING, SUCCESS, FAILED }
 
 export interface State {
     occurrences: Array<Item>,
+    types: Array<string>,
     status: STATUS,
     error: any,
 }
@@ -21,6 +22,7 @@ const homeSlice = createSlice({
     name: 'home',
     initialState: {
         occurrences: [],
+        types: [],
         status: STATUS.IDLE,
         error: null,
     } as State,
@@ -49,6 +51,7 @@ const homeSlice = createSlice({
             .addCase(doGetNewest.fulfilled, (state, action) => {
                 state.status = STATUS.SUCCESS;
                 state.occurrences = action.payload.data;
+                state.types = action.payload.types;
             })
             .addCase(doGetNewest.rejected, (state, action) => {
                 state.status = STATUS.FAILED;

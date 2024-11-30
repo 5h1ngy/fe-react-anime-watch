@@ -17,11 +17,13 @@ export interface Item {
     type: string;
     image: Image;
     tags: Tag[];
+    description: string | null;
 }
 
 // Define the ResponseData interface
 export interface ResponseData {
     data: Item[];
+    types: string[];
     total: number;
     page: number;
     limit: number;

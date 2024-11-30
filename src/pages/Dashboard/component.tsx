@@ -87,7 +87,7 @@ export default function Component(props: ComponentProps) {
                 </IconButton>
                 <Spacer />
                 {/** ColorMode button (custom) */}
-                <ColorModeButtonExtended variant="enclosed" />
+                <ColorModeButtonExtended variant="enclosed" size={"lg"} />
 
             </HStack>
         </GridItem>
