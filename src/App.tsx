@@ -1,4 +1,4 @@
-import { RouterProvider, useRouteError } from "react-router-dom"
+import { RouteObject, RouterProvider, useRouteError } from "react-router-dom"
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { Helmet } from "react-helmet";
 import { Outlet } from "react-router-dom";
@@ -8,7 +8,7 @@ import { HiBars3, HiHome, HiBookmark, HiMagnifyingGlass } from "react-icons/hi2"
 
 import ThemeProvider from "@/providers/ThemeProvider"
 import withDynamicImport from "@/hocs/withDynamicImport";
-import store from '@/store';
+import store, { actions } from '@/store';
 
 const imgUrl = new URL('/public/vite.svg', import.meta.url).href
 
@@ -19,18 +19,12 @@ function ErrorBoundary() {
     return <div>Dang!!</div>;
 }
 
-const routes = [
+const routes: RouteObject[] = [
     {
         id: "root",
         path: "/",
         element: withDynamicImport('Landing', <h1> Loading </h1>).pages({
             children: <Outlet />,
-            navigationHistory: [
-                { label: 'Test-1', current: false },
-                { label: 'Test-2', current: false },
-                { label: 'Test-3', current: false },
-                { label: 'Test-4', current: true },
-            ],
             navbarItems: [
                 { icon: <HiHome />, label: 'Newset', value: 'newset', default: true },
                 { icon: <HiMagnifyingGlass />, label: 'Search', value: 'search', default: false },
@@ -46,6 +40,7 @@ const routes = [
             {
                 id: "home",
                 path: 'home',
+                loader: async () => store.dispatch(actions.pageLanding.setHistory({ id: 'home', label: 'Newset', current: true })),
                 element: withDynamicImport('Home', <h1> Loading </h1>).containers(),
                 errorElement: <ErrorBoundary />,
             }

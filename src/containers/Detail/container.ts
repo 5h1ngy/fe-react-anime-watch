@@ -1,16 +1,15 @@
 import { connect } from "react-redux";
 import { bindActionCreators, Dispatch } from "redux";
 
-import { State, actions } from '@/store';
+import { actions } from '@/store/containerHome';
+import { State as GlobalState } from '@/store';
 
-const mapStateToProps = (state: State) => ({
-    ...state.pageLanding,
-    ...state.containerHome,
+const mapStateToProps = (state: GlobalState) => ({
+    ...state.home,
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
-    ...actions.pageLanding,
-    ...actions.containerHome,
+    ...actions
 }, dispatch);
 
 

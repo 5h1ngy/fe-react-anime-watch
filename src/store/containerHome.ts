@@ -6,7 +6,11 @@ export enum STATUS { IDLE, LOADING, SUCCESS, FAILED }
 
 export interface State {
     occurrences: Array<Item>,
-    types: Array<string>,
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+    types: string[];
     status: STATUS,
     error: any,
 }
@@ -16,15 +20,24 @@ export interface Actions {
 }
 
 // Definisci la chiamata asincrona per ottenere i dati dal server
-const doGetNewest = createAsyncThunk('home/doGetNewest', async () => await getNewest());
+const doGetNewest = createAsyncThunk(
+    'container/home/doGetNewest',
+    async (payload: { page: number, limit: number }) => {
+        return await getNewest(payload);
+    }
+);
 
 const homeSlice = createSlice({
-    name: 'home',
+    name: 'container/home',
     initialState: {
-        occurrences: [],
-        types: [],
         status: STATUS.IDLE,
         error: null,
+        occurrences: [],
+        page: 1,
+        limit: 10,
+        total: 0,
+        totalPages: 0,
+        types: [],
     } as State,
     reducers: {
         // addItem: (state, action) => {
@@ -50,7 +63,12 @@ const homeSlice = createSlice({
             })
             .addCase(doGetNewest.fulfilled, (state, action) => {
                 state.status = STATUS.SUCCESS;
-                state.occurrences = action.payload.data;
+
+                state.occurrences = action.payload.occurrences;
+                state.page = action.payload.page;
+                state.limit = action.payload.limit;
+                state.total = action.payload.total;
+                state.totalPages = action.payload.totalPages;
                 state.types = action.payload.types;
             })
             .addCase(doGetNewest.rejected, (state, action) => {

@@ -1,31 +1,9 @@
 import { ReactElement } from "react";
-import { Flex, HStack, Spacer, IconButton, Center } from "@chakra-ui/react"
+import { Flex, HStack } from "@chakra-ui/react"
+import { Spacer, Center } from "@chakra-ui/react"
 import { Tabs, Image } from "@chakra-ui/react"
-import { HiBars3 } from "react-icons/hi2";
 
-import { BreadcrumbCurrentLink, BreadcrumbLink, BreadcrumbRoot } from "@/components/Chakra/breadcrumb"
 import { ColorModeButtonExtended } from "@/components/Chakra/color-mode"
-
-import {
-    PaginationItems,
-    PaginationNextTrigger,
-    PaginationPageText,
-    PaginationPrevTrigger,
-    PaginationRoot,
-} from "@/components/Chakra/pagination"
-
-import {
-    SelectContent,
-    SelectItem,
-    SelectLabel,
-    SelectRoot,
-    SelectTrigger,
-    SelectValueText,
-} from "@/components/Chakra/select"
-
-
-
-import { For, Stack, createListCollection } from "@chakra-ui/react"
 
 interface NavbarItems {
     icon: ReactElement
@@ -34,19 +12,13 @@ interface NavbarItems {
     default: boolean
 }
 
-interface NavigationHistory {
-    label: string
-    current: boolean
-}
-
 interface ComponentProps {
     children?: ReactElement
     navbarItems: Array<NavbarItems>
-    navigationHistory: Array<NavigationHistory>
 }
 
 export default function Component(props: ComponentProps) {
-    const { children, navbarItems, navigationHistory } = props
+    const { children, navbarItems } = props
 
     return <Flex direction={"column"} width={"100%"} minHeight={'100vh'}>
 
@@ -97,13 +69,7 @@ export default function Component(props: ComponentProps) {
             minHeight={'100vh'}
             backgroundColor={"white"} _dark={{ backgroundColor: "black" }}
         >
-
-            
-
-            {children !== undefined ? children : undefined}
-
+            {children !== undefined && children}
         </Flex>
-
-
     </Flex>
 }

@@ -1,3 +1,4 @@
+import axios from "axios";
 import mock from "./newest.mock";
 import { ResponseData, Item } from "./newest.types";
 
@@ -15,6 +16,35 @@ function extractTypes(data: Item[]): string[] {
     return Array.from(typesSet);
 }
 
-export async function getNewest(): Promise<ResponseData> {
-    return await new Promise((resolve, _reject) => setTimeout(() => resolve({ ...mock, types: extractTypes(mock.data) }), 1000));
+// Flag per abilitare la modalità mock (esempio: da variabile di ambiente)
+const isMockMode = import.meta.env.USE_MOCK === "true";
+
+export async function getNewest(payload: { page: number, limit: number }): Promise<ResponseData> {
+    if (isMockMode) {
+        console.log("Modalità Mock attiva. Restituisco dati mock.");
+        return new Promise((resolve) =>
+            setTimeout(() => resolve({ ...mock, types: extractTypes(mock.occurrences) }), 1000)
+        );
+    }
+
+    try {
+        // Chiamata al servizio tramite Axios
+        const response = await axios.get<ResponseData>(`/api/anime-details?offset=${payload.page}&size=${payload.limit}`);
+
+        // Estrazione dei tipi e ritorno dei dati
+        const dataWithTypes = {
+            ...response.data,
+            types: extractTypes(response.data.occurrences),
+        };
+
+        return dataWithTypes;
+    } catch (error) {
+        console.error("Errore durante la chiamata al servizio, uso mock:", error);
+
+        // Fallback ai dati mock in caso di errore
+        return {
+            ...mock,
+            types: extractTypes(mock.occurrences),
+        };
+    }
 }

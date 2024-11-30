@@ -22,7 +22,7 @@ export interface Item {
 
 // Define the ResponseData interface
 export interface ResponseData {
-    data: Item[];
+    occurrences: Item[];
     types: string[];
     total: number;
     page: number;

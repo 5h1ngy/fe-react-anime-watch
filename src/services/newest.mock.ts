@@ -1,5 +1,5 @@
 export default {
-    "data": [
+    "occurrences": [
         {
             "id": "7f885415-b263-4344-b0ba-8b9292e2c3df",
             "title": "1+2=Paradise",
