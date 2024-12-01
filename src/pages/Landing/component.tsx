@@ -26,7 +26,7 @@ export default function Component(props: ComponentProps) {
         <Image src="/background.png" position={'fixed'} transform="scaleX(-1)" zIndex={0} right={0} bottom={0} />
 
         <HStack position={"fixed"} zIndex={'2'} width={"100%"} top={0} paddingX={'10%'}
-            borderWidth="1px" backgroundColor={"white"} _dark={{ backgroundColor: "black" }}
+            borderYWidth="1px" backgroundColor={"white"} _dark={{ backgroundColor: "black" }}
         >
 
             <Center width={"100%"}>
@@ -37,7 +37,7 @@ export default function Component(props: ComponentProps) {
 
                 <Spacer />
 
-                <Flex paddingX={'10%'} marginTop={'3rem'} >
+                <Flex paddingX={'10%'} marginTop={'3rem'}>
                     <Tabs.Root key={crypto.randomUUID()}
                         defaultValue={navbarItems.find(item => item.default)!.value}
                         variant={"line"}

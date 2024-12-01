@@ -20,6 +20,7 @@ function extractTypes(data: Item[]): string[] {
 const isMockMode = import.meta.env.USE_MOCK === "true";
 
 export async function getNewest(payload: { page: number, limit: number }): Promise<ResponseData> {
+
     if (isMockMode) {
         console.log("Modalità Mock attiva. Restituisco dati mock.");
         return new Promise((resolve) =>
@@ -29,7 +30,7 @@ export async function getNewest(payload: { page: number, limit: number }): Promi
 
     try {
         // Chiamata al servizio tramite Axios
-        const response = await axios.get<ResponseData>(`/api/anime-details?offset=${payload.page}&size=${payload.limit}`);
+        const response = await axios.get<ResponseData>(`/api/anime/newest?offset=${payload.page}&size=${payload.limit}`);
 
         // Estrazione dei tipi e ritorno dei dati
         const dataWithTypes = {

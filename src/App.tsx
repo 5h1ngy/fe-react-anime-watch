@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet";
 import { Outlet } from "react-router-dom";
 
 import { Provider } from 'react-redux';
-import { HiBars3, HiHome, HiBookmark, HiMagnifyingGlass } from "react-icons/hi2";
+import { HiHome, HiBookmark, HiMagnifyingGlass } from "react-icons/hi2";
 
 import ThemeProvider from "@/providers/ThemeProvider"
 import withDynamicImport from "@/hocs/withDynamicImport";
@@ -40,8 +40,31 @@ const routes: RouteObject[] = [
             {
                 id: "home",
                 path: 'home',
-                loader: async () => store.dispatch(actions.pageLanding.setHistory({ id: 'home', label: 'Newset', current: true })),
+                loader: async () => {
+                    await store.dispatch(actions.pageLanding.setHistory({ id: 'home', label: 'Newset', current: true }))
+
+                    return null
+                },
                 element: withDynamicImport('Home', <h1> Loading </h1>).containers(),
+                errorElement: <ErrorBoundary />,
+            },
+            {
+                id: "details",
+                path: "details/:id",
+                loader: async ({ params }) => {
+                    const { id } = params;
+                    if (!id) throw new Error("ID is required to load details.");
+
+                    // Dispatch action to fetch details
+                    if (store.getState().pageLanding.history.length === 0) {
+                        await store.dispatch(actions.pageLanding.setHistory({ id: 'details', label: 'Details', current: false }));
+                    }
+
+                    await store.dispatch(actions.containerDetails.doGetDetails({ id }));
+
+                    return null; // No data needs to be passed to the page
+                },
+                element: withDynamicImport('Details', <h1>Loading...</h1>).containers(),
                 errorElement: <ErrorBoundary />,
             }
         ]

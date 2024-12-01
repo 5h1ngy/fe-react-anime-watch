@@ -3919,9 +3919,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fe-react-components@workspace:.":
+"fe-react-anime-watch@workspace:.":
   version: 0.0.0-use.local
-  resolution: "fe-react-components@workspace:."
+  resolution: "fe-react-anime-watch@workspace:."
   dependencies:
     "@chakra-ui/react": "npm:^3.1.1"
     "@chromatic-com/storybook": "npm:^3.2.2"

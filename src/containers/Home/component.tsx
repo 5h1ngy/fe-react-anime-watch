@@ -56,6 +56,7 @@ const Component: React.FC<Props & WithRouterProps> = ({ router, state, actions, 
     }
 
     function onGoToDetails(id: string) {
+        actions.updateHistory({ id: 'details', label: 'Details', current: false })
         router.navigate(`/details/${id}`)
     }
 

@@ -42,8 +42,9 @@
     "start": "vite preview",
     "storybook": "storybook dev -p 6006 --no-open",
     "preview": "storybook build",
-    "clean": "rm -rfdv dist node_modules",
-    "lint": "eslint ."
+    "docs": "typedoc",
+    "lint": "eslint .",
+    "clean": "rm -rfdv dist node_modules"
   },
   "dependencies": {
     "@chakra-ui/react": "^3.1.1",

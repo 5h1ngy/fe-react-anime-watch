@@ -1,3 +1,9 @@
+// Define the Tag interface
+export interface Tag {
+    id: string;
+    label: string;
+}
+
 // Define the Image interface
 export interface Image {
     id: string;
@@ -10,14 +16,11 @@ export interface Item {
     title: string;
     type: string;
     image: Image;
+    tags: Tag[];
+    description: string | null;
 }
 
 // Define the ResponseData interface
 export interface ResponseData {
-    occurrences: Item[];
-    types: string[];
-    total: number;
-    page: number;
-    limit: number;
-    totalPages: number;
+    occurrence: Item;
 }
