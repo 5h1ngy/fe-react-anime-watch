@@ -3,7 +3,7 @@ import mock from "./details.mock";
 import { ResponseData } from "./details.types";
 
 // Flag per abilitare la modalità mock (esempio: da variabile di ambiente)
-const isMockMode = import.meta.env.USE_MOCK === "true";
+const isMockMode = import.meta.env.VITE_USE_MOCK === "true";
 
 export async function getDetails(payload: { id: string }): Promise<ResponseData> {
 

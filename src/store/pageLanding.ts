@@ -12,12 +12,8 @@ const landingSlice = createSlice({
         history: [],
     } as State,
     reducers: {
-        updateHistory: (state, action) => {
-            state.history = state.history.map(entry => ({ ...entry, current: false }));
-            state.history.push({ ...action.payload, current: action.payload?.current || true });
-        },
         setHistory: (state, action) => {
-            state.history = [action.payload];
+            state.history = action.payload;
         },
         clearHistory: (state) => {
             state.history = [];

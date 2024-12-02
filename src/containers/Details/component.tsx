@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useLoaderData } from "react-router-dom";
 import DOMPurify from 'dompurify';
 import { VStack, HStack, Flex, Center, Spacer } from "@chakra-ui/react";
 import { Card, Image, Text, Badge } from "@chakra-ui/react"
@@ -38,7 +39,6 @@ const Demo = (props: Item) => {
     )
 }
 
-
 export interface Props {
     state: {
         occurrence: Item | null;
@@ -46,11 +46,12 @@ export interface Props {
         history: History[];
     };
     actions: {
-        updateHistory: Function;
+        setHistory: Function;
     };
 }
 
 const Component: React.FC<Props & WithRouterProps> = ({ router, state, actions, }) => {
+    const occurrence = useLoaderData(); // Ricevi i dati restituiti dal loader
 
     {/** Navigation History Component */ }
     const NavigationHistory: React.FC = () => state.history.length != 0 && <BreadcrumbRoot>
@@ -61,30 +62,22 @@ const Component: React.FC<Props & WithRouterProps> = ({ router, state, actions, 
         )}
     </BreadcrumbRoot>
 
-    useEffect(() => {
-        actions.updateHistory({ id: state.occurrence?.id || '', label: `${state.occurrence?.title || ''}`, current: true });
-    }, [])
-
     return <>
-        {state.status === STATUS.LOADING
-            ? <Text>Loading...</Text>
-            : <>
 
-                <NavigationHistory />
+        <NavigationHistory />
 
-                {state.occurrence!.title}
+        {occurrence!.title}
 
-                <Image
-                    maxWidth={'250px'}
-                    src={state.occurrence?.image.thumbnail}
-                    alt="Green double couch with wooden legs"
-                />
+        <Image
+            maxWidth={'250px'}
+            src={occurrence.image.thumbnail}
+            alt="Green double couch with wooden legs"
+        />
 
-                {state.occurrence?.tags && <Flex wrap={"wrap"}>{state.occurrence?.tags.map(tag => <Badge>{tag.label}</Badge>)}</Flex>}
-                {state.occurrence?.description && <div dangerouslySetInnerHTML={{ __html: state.occurrence!.description }} />}
+        {occurrence.tags && <Flex wrap={"wrap"}>{occurrence.tags.map((tag: { label: string }) => <Badge>{tag.label}</Badge>)}</Flex>}
 
-            </>
-        }
+        {occurrence.description && <div dangerouslySetInnerHTML={{ __html: occurrence?.description || '' }} />}
+
     </>
 }
 

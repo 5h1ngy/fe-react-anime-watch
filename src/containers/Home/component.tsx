@@ -1,4 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
 
 import { Center, createListCollection } from "@chakra-ui/react"
 import { Text, HStack, Flex, Spacer } from "@chakra-ui/react";
@@ -14,6 +16,8 @@ import withRouter, { WithRouterProps } from "@/hocs/withRouter";
 
 import Card from "@/components/Card"
 
+gsap.registerPlugin(ScrollTrigger);
+
 export interface Props {
     state: {
         occurrences: Array<Item>;
@@ -28,12 +32,13 @@ export interface Props {
     };
     actions: {
         doGetNewest: Function;
-        updateHistory: Function;
         clearHistory: Function;
     };
 }
 
 const Component: React.FC<Props & WithRouterProps> = ({ router, state, actions, }) => {
+
+    const cardsRef = useRef<HTMLDivElement[]>([]);
 
     const pages = createListCollection({
         items: [
@@ -58,7 +63,6 @@ const Component: React.FC<Props & WithRouterProps> = ({ router, state, actions, 
     }
 
     function onGoToDetails(id: string) {
-        actions.updateHistory({ id: 'details', label: 'Details', current: false })
         router.navigate(`/details/${id}`)
     }
 
@@ -95,18 +99,47 @@ const Component: React.FC<Props & WithRouterProps> = ({ router, state, actions, 
     </>
 
     const Cards: React.FC = () => <Flex wrap={'wrap'} gap='2rem' align="stretch" justify={"center"}>
-        {state.occurrences.map(occurrence => <Card key={crypto.randomUUID()}
-            id={occurrence.id}
-            thumbnail={occurrence.image.thumbnail}
-            title={occurrence.title}
-            type={occurrence.type}
-            goToDetails={onGoToDetails}
-        />)}
+        {state.occurrences.map((occurrence, index) => (
+            <div
+                key={crypto.randomUUID()}
+                ref={(el) => (cardsRef.current[index] = el!)} // Salva il ref della card
+            >
+                <Card
+                    id={occurrence.id}
+                    thumbnail={occurrence.image.thumbnail}
+                    title={occurrence.title}
+                    type={occurrence.type}
+                    goToDetails={onGoToDetails}
+                />
+            </div>
+        ))}
     </Flex>
 
     useEffect(() => {
         actions.doGetNewest({ page: state.page, limit: state.limit });
     }, []);
+
+    useEffect(() => {
+        // Animazione GSAP per le card
+        cardsRef.current.forEach(card => gsap.fromTo(
+            card,
+            {
+                opacity: 0,
+                y: 50, // Parte 50px sotto
+            },
+            {
+                opacity: 1,
+                y: 0, // Torna alla posizione originale
+                duration: 0.4,
+                delay: 0.9, // Effetto "staggered"
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 85%", // Inizia quando il top è all'80% del viewport
+                    toggleActions: "play none none none",
+                },
+            }
+        ));
+    }, [state.occurrences]);
 
     return <>
         {state.status === STATUS.LOADING

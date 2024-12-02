@@ -1,11 +1,18 @@
 import { ReactElement } from "react";
-import { Flex, HStack } from "@chakra-ui/react"
-import { Spacer, Center } from "@chakra-ui/react"
+import { NavLink } from "react-router";
+import { Flex } from "@chakra-ui/react"
+import { Spacer } from "@chakra-ui/react"
 import { Tabs, Image } from "@chakra-ui/react"
 
 import { ColorModeButtonExtended } from "@/components/Chakra/color-mode"
 
 interface NavbarItems {
+    icon: ReactElement
+    label: string
+    value: string
+}
+
+interface NavbarSubItems {
     icon: ReactElement
     label: string
     value: string
@@ -15,60 +22,65 @@ interface NavbarItems {
 interface ComponentProps {
     children?: ReactElement
     navbarItems: Array<NavbarItems>
+    navbarSubItems: Array<NavbarSubItems>
 }
 
 export default function Component(props: ComponentProps) {
-    const { children, navbarItems } = props
+    const { children, navbarItems, navbarSubItems } = props
 
     return <Flex direction={"column"} width={"100%"} minHeight={'100vh'}>
 
-        {/* <Image src="/background.png" position={'fixed'} zIndex={0} left={0} bottom={0} /> */}
-        <Image src="/background.png" position={'fixed'} transform="scaleX(-1)" zIndex={0} right={0} bottom={0} />
-
-        <HStack position={"fixed"} zIndex={'2'} width={"100%"} top={0} paddingX={'10%'}
+        <Flex wrap={"wrap"} position={"fixed"} zIndex={'2'} width={"100%"} top={0} paddingX={'10%'}
             borderYWidth="1px" backgroundColor={"white"} _dark={{ backgroundColor: "black" }}
+            gapX={'1rem'} justifyContent={"center"} justifyItems={"center"} alignContent={'center'} alignItems={'center'}
         >
 
-            <Center width={"100%"}>
+            <Image src="/logo.png" />
 
-                <Image src="/logo.png" />
+            {navbarItems.map(item => (
+                <NavLink key={crypto.randomUUID()} to={item.value} end> {item.label}</NavLink>
+            ))}
 
-                <h3>About</h3>
+            <Spacer />
 
-                <Spacer />
+            <Flex paddingX={'10%'} marginTop={'3rem'}>
+                <Tabs.Root key={crypto.randomUUID()}
+                    defaultValue={navbarSubItems.find(item => item.default)!.value}
+                    variant={"line"}
+                    size={"sm"}
+                    onValueChange={() => { }}
+                >
+                    <Tabs.List>
+                        {navbarSubItems.map(item => (
+                            <Tabs.Trigger key={crypto.randomUUID()} value={item.value}>
+                                {item.icon}
+                                <NavLink to={item.value} end> {item.label}</NavLink>
+                            </Tabs.Trigger>
+                        ))}
+                    </Tabs.List>
+                </ Tabs.Root>
+            </Flex>
 
-                <Flex paddingX={'10%'} marginTop={'3rem'}>
-                    <Tabs.Root key={crypto.randomUUID()}
-                        defaultValue={navbarItems.find(item => item.default)!.value}
-                        variant={"line"}
-                        size={"sm"}
-                        onValueChange={() => { }}
-                    >
-                        <Tabs.List>
-                            {navbarItems.map(item => (
-                                <Tabs.Trigger key={crypto.randomUUID()} value={item.value}>
-                                    {item.icon}
-                                    {item.label}
-                                </Tabs.Trigger>
-                            ))}
-                        </Tabs.List>
-                    </ Tabs.Root>
-                </Flex>
+            <Spacer />
 
-                <Spacer />
+            {/** ColorMode button (custom) */}
+            <ColorModeButtonExtended variant="enclosed" size={"sm"} />
 
-                {/** ColorMode button (custom) */}
-                <ColorModeButtonExtended variant="enclosed" size={"sm"} />
-            </Center>
+        </Flex>
 
-        </HStack>
-
-        <Flex direction={"column"} zIndex={'1'} borderWidth="1px" width={"60%"} marginTop={'5.4rem'}
-            paddingTop={'3rem'} paddingBottom={'3rem'} marginLeft={"20%"} marginRight={"20%"}
-            paddingX={'4rem'} gap={'3rem'}
+        <Flex direction={"column"} zIndex={'1'} marginTop={'5.4rem'}
+            paddingTop={'3rem'} paddingBottom={'3rem'}
+            paddingX={{ base: "15%", sm: "4rem", md: "4rem", lg: '4rem', xl: '15%', "2xl": '15%' }} gap={'3rem'}
             minHeight={'100vh'}
-            backgroundColor={"white"} _dark={{ backgroundColor: "black" }}
+            borderYWidth="1px"
+            backgroundColor={"gray.100"} _dark={{ backgroundColor: "gray.900" }}
         >
+
+            {/* <Image src="/background.png" position={'fixed'} zIndex={0} left={0} bottom={0} /> */}
+            <Image src="/background.png" position={'fixed'} transform="scaleX(-1)" zIndex={0} right={0} bottom={0}
+                display={{ base: "block", sm: "none", md: "none", lg: 'none', xl: 'block', "2xl": 'block' }}
+            />
+
             {children !== undefined && children}
         </Flex>
     </Flex>
