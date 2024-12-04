@@ -1618,6 +1618,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/lodash@npm:^4":
+  version: 4.17.13
+  resolution: "@types/lodash@npm:4.17.13"
+  checksum: 10c0/c3d0b7efe7933ac0369b99f2f7bff9240d960680fdb74b41ed4bd1b3ca60cca1e31fe4046d9abbde778f941a41bc2a75eb629abf8659fa6c27b66efbbb0802a9
+  languageName: node
+  linkType: hard
+
 "@types/mdx@npm:^2.0.0":
   version: 2.0.13
   resolution: "@types/mdx@npm:2.0.13"
@@ -3770,6 +3777,7 @@ __metadata:
     "@storybook/react": "npm:^8.4.6"
     "@storybook/react-vite": "npm:^8.4.6"
     "@storybook/test": "npm:^8.4.6"
+    "@types/lodash": "npm:^4"
     "@types/react": "npm:^18.3.12"
     "@types/react-dom": "npm:^18.3.1"
     "@types/react-helmet": "npm:^6.1.11"
@@ -3783,6 +3791,7 @@ __metadata:
     eslint-plugin-storybook: "npm:^0.11.1"
     globals: "npm:^15.12.0"
     gsap: "npm:^3.12.5"
+    lodash: "npm:^4.17.21"
     next-themes: "npm:^0.4.3"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"

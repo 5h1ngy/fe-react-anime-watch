@@ -15,6 +15,10 @@ export interface Item {
     id: string;
     title: string;
     type: string;
+    episodes: number;
+    season: string;
+    year_start: number;
+    year_end: number;
     image: Image;
     tags: Tag[];
     description: string | null;

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useLoaderData } from "react-router-dom";
 import DOMPurify from 'dompurify';
-import { VStack, HStack, Flex, Center, Spacer } from "@chakra-ui/react";
+import { VStack, HStack, Flex, Center, Spacer, Box } from "@chakra-ui/react";
 import { Card, Image, Text, Badge } from "@chakra-ui/react"
 
 import { History } from "@/store/pageLanding";
@@ -10,6 +10,7 @@ import { Item } from "@/services/details.types";
 import withRouter, { WithRouterProps } from "@/hocs/withRouter";
 import { BreadcrumbCurrentLink, BreadcrumbLink, BreadcrumbRoot } from "@/components/Chakra/breadcrumb";
 import { Button } from "@/components/Chakra/button"
+import _ from "lodash";
 
 
 const Demo = (props: Item) => {
@@ -50,6 +51,14 @@ export interface Props {
     };
 }
 
+function getRandomColor(): 'red' | 'orange' | 'yellow' | 'green' | 'teal' | 'blue' | 'cyan' | 'purple' | 'pink' | 'accent' {
+    const colors: Array<'red' | 'orange' | 'yellow' | 'green' | 'teal' | 'blue' | 'cyan' | 'purple' | 'pink' | 'accent'> = [
+        'red', 'orange', 'yellow', 'green', 'teal', 'blue', 'cyan', 'purple', 'pink', 'accent'
+    ];
+    return _.sample(colors)!;
+}
+
+
 const Component: React.FC<Props & WithRouterProps> = ({ router, state, actions, }) => {
     const occurrence = useLoaderData(); // Ricevi i dati restituiti dal loader
 
@@ -66,17 +75,38 @@ const Component: React.FC<Props & WithRouterProps> = ({ router, state, actions, 
 
         <NavigationHistory />
 
-        {occurrence!.title}
+        <Flex wrap={"wrap"} gap={'2rem'} justifyContent={"center"}>
 
-        <Image
-            maxWidth={'250px'}
-            src={occurrence.image.thumbnail}
-            alt="Green double couch with wooden legs"
-        />
+            <Flex direction={"column"} width={'fit-content'} gap={'1rem'}>
+                <Image
+                    width={'300px'}
+                    borderWidth="1px" borderRadius={'10px'}
+                    src={occurrence.image.thumbnail}
+                    alt="Green double couch with wooden legs"
+                />
+            </Flex>
 
-        {occurrence.tags && <Flex wrap={"wrap"}>{occurrence.tags.map((tag: { label: string }) => <Badge>{tag.label}</Badge>)}</Flex>}
+            <Flex direction={"column"} width={'50%'} gap={'0.4rem'}>
 
-        {occurrence.description && <div dangerouslySetInnerHTML={{ __html: occurrence?.description || '' }} />}
+                <Flex direction={"row"} gap={"1rem"}>
+                    <Text textStyle="md">{occurrence!.year_start} {occurrence!.season}</Text>
+                    <Text textStyle="md">{occurrence!.type}, episodes: {occurrence!.episodes}</Text>
+                </Flex>
+
+                <Text textStyle="3xl">
+                    {occurrence!.title}
+                </Text>
+
+                {occurrence.tags && <Flex wrap={"wrap"} gap={'0.3rem'}>
+                    {occurrence.tags.map((tag: { label: string }) => <Badge colorPalette={getRandomColor()}>{tag.label}</Badge>)}
+                </Flex>}
+
+                <Box borderWidth="1px" borderRadius={'10px'} padding={'1rem'} backgroundColor={"white"} _dark={{ backgroundColor: "black" }}>
+                    {occurrence.description && <div dangerouslySetInnerHTML={{ __html: occurrence?.description || '' }} />}
+                </Box>
+            </Flex>
+
+        </Flex>
 
     </>
 }

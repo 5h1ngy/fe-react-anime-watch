@@ -9,6 +9,8 @@ export interface Item {
     id: string;
     title: string;
     type: string;
+    season: string;
+    year_start: number;
     image: Image;
 }
 

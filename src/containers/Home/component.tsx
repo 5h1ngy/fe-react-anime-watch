@@ -109,6 +109,8 @@ const Component: React.FC<Props & WithRouterProps> = ({ router, state, actions, 
                     thumbnail={occurrence.image.thumbnail}
                     title={occurrence.title}
                     type={occurrence.type}
+                    yearStart={occurrence.year_start}
+                    season={occurrence.season}
                     goToDetails={onGoToDetails}
                 />
             </div>
@@ -121,24 +123,26 @@ const Component: React.FC<Props & WithRouterProps> = ({ router, state, actions, 
 
     useEffect(() => {
         // Animazione GSAP per le card
-        cardsRef.current.forEach(card => gsap.fromTo(
-            card,
-            {
-                opacity: 0,
-                y: 50, // Parte 50px sotto
-            },
-            {
-                opacity: 1,
-                y: 0, // Torna alla posizione originale
-                duration: 0.4,
-                delay: 0.9, // Effetto "staggered"
-                scrollTrigger: {
-                    trigger: card,
-                    start: "top 85%", // Inizia quando il top è all'80% del viewport
-                    toggleActions: "play none none none",
+        cardsRef.current.forEach((card) => {
+            gsap.fromTo(
+                card,
+                {
+                    opacity: 0, // Inizia trasparente
+                    y: 100,     // Parte 100px sotto
                 },
-            }
-        ));
+                {
+                    opacity: 1, // Diventa visibile
+                    y: 0,       // Torna alla posizione originale
+                    duration: 0.8, // Durata dell'animazione
+                    ease: "bounce.out", // Effetto rimbalzo
+                    scrollTrigger: {
+                        trigger: card,
+                        start: "top 85%", // Inizia quando il top della card raggiunge l'85% del viewport
+                        toggleActions: "play none none none", // L'animazione si riproduce solo in avanti
+                    },
+                }
+            );
+        });
     }, [state.occurrences]);
 
     return <>
