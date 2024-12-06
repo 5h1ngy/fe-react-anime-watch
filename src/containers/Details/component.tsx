@@ -1,34 +1,22 @@
 import _ from "lodash";
 import { useLoaderData } from "react-router-dom";
 import DOMPurify from 'dompurify';
-import { VStack, HStack, Flex, Center, Spacer, Box } from "@chakra-ui/react";
-import { Card, Image, Text, Badge } from "@chakra-ui/react"
+import { Flex, Box } from "@chakra-ui/react";
+import { Image, Text, Badge } from "@chakra-ui/react"
 import { Separator } from "@chakra-ui/react"
 
 import getRandomColor from "@/utils/getRandomColor"
-import { History } from "@/store/pageLanding";
 import { STATUS } from "@/store/containerDetails";
-import { Item } from "@/services/details.types";
 import withRouter, { WithRouterProps } from "@/hocs/withRouter";
 import { BreadcrumbCurrentLink, BreadcrumbLink, BreadcrumbRoot } from "@/components/Chakra/breadcrumb";
+import { ComponentProps } from "./component.types";
 
-export interface Props {
-    state: {
-        occurrence: Item | null;
-        status: STATUS;
-        history: History[];
-    };
-    actions: {
-        setHistory: Function;
-    };
-}
-
-const Component: React.FC<Props & WithRouterProps> = ({ state, actions, }) => {
+const Component: React.FC<ComponentProps & WithRouterProps> = ({ state, }) => {
     const occurrence = useLoaderData()
 
     {/** Navigation History Component */ }
-    const NavigationHistory: React.FC = () => state.history.length != 0 && <BreadcrumbRoot>
-        {state.history.map(history =>
+    const NavigationHistory: React.FC = () => state.pageLanding.history.length != 0 && <BreadcrumbRoot>
+        {state.pageLanding.history.map(history =>
             !history.current
                 ? <BreadcrumbLink key={crypto.randomUUID()} href="#">{history.label}</BreadcrumbLink>
                 : <BreadcrumbCurrentLink key={crypto.randomUUID()}>{history.label}</BreadcrumbCurrentLink>
@@ -37,7 +25,7 @@ const Component: React.FC<Props & WithRouterProps> = ({ state, actions, }) => {
 
     return <>
 
-        {state.status === STATUS.LOADING
+        {state.containerDetails.status === STATUS.LOADING
             ? "LOADING..."
             : <Flex direction={"column"} gapY={'2rem'}>
                 <NavigationHistory />
@@ -76,8 +64,7 @@ const Component: React.FC<Props & WithRouterProps> = ({ state, actions, }) => {
                             borderWidth="1px" borderRadius={'10px'} padding={'1rem'}
                             backgroundColor={"white"} _dark={{ backgroundColor: "black" }}
                         >
-                            {/* <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(occurrence?.description) || '' }} /> */}
-                            <div dangerouslySetInnerHTML={{ __html: occurrence?.description || '' }} />
+                            <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(occurrence?.description) || '' }} />
                         </Box>}
                     </Flex>
 

@@ -22,3 +22,8 @@ export interface ResponseData {
     limit: number;
     totalPages: number;
 }
+
+// Define the ResponseData interface
+export interface Response {
+    occurrences: Item[];
+}

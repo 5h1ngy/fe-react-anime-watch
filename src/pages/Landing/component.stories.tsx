@@ -1,37 +1,39 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { HiBars3, HiHome, HiBookmark, HiMagnifyingGlass } from "react-icons/hi2";
+import { HiHome, HiBookmark, HiMagnifyingGlass } from "react-icons/hi2";
 
-import Dashboard from './component';
+import Component from './component';
 
 const meta = {
-  title: 'Page/Dashboard',
-  component: Dashboard,
+  title: 'Page/Preview',
+  component: Component,
   parameters: {
-    // More on how to position stories at: https://storybook.js.org/docs/configure/story-layout
     layout: 'fullscreen',
   },
-  // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ['autodocs'],
-} satisfies Meta<typeof Dashboard>;
+} satisfies Meta<typeof Component>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    navigationHistory: [
-      { label: 'Test-1', current: false },
-      { label: 'Test-2', current: false },
-      { label: 'Test-3', current: false },
-      { label: 'Test-4', current: true },
-    ],
     navbarItems: [
-      { icon: <HiHome />, label: 'Newset', value: 'newset', default: true },
-      { icon: <HiMagnifyingGlass />, label: 'Search', value: 'search', default: false },
-      { icon: <HiBookmark />, label: 'My List', value: 'myList', default: false }
-    ]
+      { icon: <HiHome />, label: 'Newset', value: '/home' },
+      { icon: <HiMagnifyingGlass />, label: 'Search', value: '/search' },
+      { icon: <HiBookmark />, label: 'My List', value: '/my-list' },
+    ],
+    navbarSubItems: [
+      { icon: <HiHome />, label: 'Overview', value: '/overview' },
+      { icon: <HiMagnifyingGlass />, label: 'Explore', value: '/explore' },
+      { icon: <HiBookmark />, label: 'Saved', value: '/saved' },
+    ],
+    logo: 'https://via.placeholder.com/42', // Placeholder logo URL
+    decorationBody: 'https://via.placeholder.com/100x100', // Placeholder decoration image URL
+    children: (
+      <div>
+        <h1>Welcome to the Preview</h1>
+        <p>This is a sample body content for the Preview.</p>
+      </div>
+    ),
   },
 };
-
-// More on interaction testing: https://storybook.js.org/docs/writing-tests/interaction-testing
-// export const LoggedIn: Story = {};

@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getNewest } from '@/services/newest';
-import { Item } from "@/services/newest.types";
+import { getNewest } from '@/services/anime';
+import { Item } from "@/services/anime.types";
 
 export enum STATUS { IDLE, LOADING, SUCCESS, FAILED }
 

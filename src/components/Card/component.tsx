@@ -16,9 +16,10 @@ export interface Props {
   type: string;
   goToDetails: Function;
   addToFavorites: Function;
+  additional?: React.ReactElement
 }
 
-const Component: React.FC<Props> = ({ id, thumbnail, yearStart, season, title, type, goToDetails, addToFavorites }) => {
+const Component: React.FC<Props> = ({ id, thumbnail, yearStart, season, title, type, goToDetails, addToFavorites, additional }) => {
 
   return (<Card.Root maxW={'180px'} overflow="hidden">
 
@@ -38,12 +39,17 @@ const Component: React.FC<Props> = ({ id, thumbnail, yearStart, season, title, t
 
     <Card.Footer>
       <Flex gap="2" wrap='wrap'>
-        <IconButton aria-label="Details" variant="surface" size="xs">
-          <FcViewDetails onClick={() => goToDetails(id)} />
+
+        <IconButton onClick={() => goToDetails(id)} aria-label="Details" variant="surface" size="xs">
+          <FcViewDetails />
         </IconButton>
-        <IconButton aria-label="Add to my list" variant="ghost" size="xs">
-          <FcLike onClick={() => addToFavorites(title, id)} />
-        </IconButton>
+
+        {!additional && <IconButton onClick={() => addToFavorites(title, id)} aria-label="Add to my list" variant="ghost" size="xs">
+          <FcLike />
+        </IconButton>}
+
+        {additional && additional}
+
       </Flex>
     </Card.Footer>
 

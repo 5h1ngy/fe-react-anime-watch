@@ -3,7 +3,6 @@ import { Navigate } from 'react-router-dom';
 import { Outlet } from "react-router-dom";
 
 import { HiHome, HiBookmark, HiMagnifyingGlass } from "react-icons/hi2";
-import { Text } from "@chakra-ui/react"
 
 import withDynamicImport from "@/hocs/withDynamicImport";
 import store, { actions } from '@/store';
@@ -15,14 +14,16 @@ const routes: RouteObject[] = [
         id: "root",
         path: "/",
         element: withDynamicImport('Landing', <Loading />).pages({
+            logo: "/logo.png",
+            decorationBody: "/decoration.png",
             children: <Outlet />,
             navbarItems: [
-                { icon: <HiHome />, label: <Text textStyle="md">About</Text>, value: '/about' },
+                { icon: <HiHome />, label: "About", value: '/about' },
             ],
             navbarSubItems: [
-                { icon: <HiHome />, label: 'Newset', value: '/home', default: true },
-                { icon: <HiMagnifyingGlass />, label: 'Search', value: '/search', default: false },
-                { icon: <HiBookmark />, label: 'My List', value: '/myList', default: false }
+                { icon: <HiHome />, label: 'Newset', value: '/home' },
+                { icon: <HiMagnifyingGlass />, label: 'Search', value: '/search' },
+                { icon: <HiBookmark />, label: 'My List', value: '/my-list' }
             ]
         }),
         errorElement: <Error />,
@@ -40,6 +41,17 @@ const routes: RouteObject[] = [
                     return null
                 },
                 element: withDynamicImport('Newest', <Loading />).containers(),
+                errorElement: <Error />,
+            },
+            {
+                id: "my-list",
+                path: 'my-list',
+                loader: async function homeLoader() {
+                    store.dispatch(actions.pageLanding.setHistory([{ id: 'my-list', label: 'My List', current: true }]))
+
+                    return null
+                },
+                element: withDynamicImport('MyList', <Loading />).containers(),
                 errorElement: <Error />,
             },
             {
