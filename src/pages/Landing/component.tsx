@@ -30,20 +30,31 @@ export default function Component(props: ComponentProps) {
 
     return <Flex direction={"column"} width={"100%"} minHeight={'100vh'}>
 
-        <Flex wrap={"wrap"} position={"fixed"} zIndex={'2'} width={"100%"} top={0} paddingX={'10%'}
-            borderYWidth="1px" backgroundColor={"white"} _dark={{ backgroundColor: "black" }}
-            gapX={'1rem'} justifyContent={"center"} justifyItems={"center"} alignContent={'center'} alignItems={'center'}
+        <Flex wrap={"wrap"} position={"fixed"} zIndex={'2'} width={"100%"} top={0}
+            backgroundColor={"white"} _dark={{ backgroundColor: "black" }}
+            borderYWidth="1px"
         >
 
-            <Image src="/logo.png" />
+            <Flex wrap={"wrap"} direction={"row"} width={'100%'}
+                gapX={'1rem'} justifyContent={"center"} justifyItems={"center"} alignContent={'center'} alignItems={'center'}
+                paddingX={'5%'} paddingTop={'1rem'}
+            >
+                <Image src="/logo.png" width={'42px'} />
 
-            {navbarItems.map(item => (
-                <NavLink key={crypto.randomUUID()} to={item.value} end> {item.label}</NavLink>
-            ))}
+                {navbarItems.map(item => (
+                    <NavLink key={crypto.randomUUID()} to={item.value} end> {item.label}</NavLink>
+                ))}
 
-            <Spacer />
+                <Spacer />
 
-            <Flex paddingX={'10%'} marginTop={'3rem'}>
+                {/** ColorMode button (custom) */}
+                <ColorModeButtonExtended variant="enclosed" size={"sm"} />
+            </Flex>
+
+            <Flex wrap={"wrap"} direction={"row"} width={'100%'}
+                gapX={'1rem'} justifyContent={"start"} justifyItems={"center"} alignContent={'center'} alignItems={'center'}
+                paddingX={'10%'}
+            >
                 <Tabs.Root key={crypto.randomUUID()}
                     defaultValue={navbarSubItems.find(item => item.default)!.value}
                     variant={"line"}
@@ -61,24 +72,19 @@ export default function Component(props: ComponentProps) {
                 </ Tabs.Root>
             </Flex>
 
-            <Spacer />
-
-            {/** ColorMode button (custom) */}
-            <ColorModeButtonExtended variant="enclosed" size={"sm"} />
-
         </Flex>
 
         <Flex direction={"column"} zIndex={'1'} marginTop={'5.4rem'}
-            paddingTop={'3rem'} paddingBottom={'3rem'}
-            paddingX={{ base: "15%", sm: "4rem", md: "4rem", lg: '4rem', xl: '15%', "2xl": '15%' }} gap={'3rem'}
-            minHeight={'100vh'}
+            paddingX={{ base: "5%", sm: "4rem", md: "4rem", lg: '4rem', xl: '15%', "2xl": '15%' }} gap={'3rem'}
+            paddingY={'4rem'}
+            minHeight={'90.5vh'}
             borderYWidth="1px"
             backgroundColor={"gray.100"} _dark={{ backgroundColor: "gray.900" }}
         >
 
             {/* <Image src="/background.png" position={'fixed'} zIndex={0} left={0} bottom={0} /> */}
             <Image src="/background.png" position={'fixed'} transform="scaleX(-1)" zIndex={0} right={0} bottom={0}
-                display={{ base: "block", sm: "none", md: "none", lg: 'none', xl: 'block', "2xl": 'block' }}
+                display={{ base: "none", sm: "none", md: "none", lg: 'none', xl: 'block', "2xl": 'block' }}
             />
 
             {children !== undefined && children}

@@ -5,26 +5,21 @@ import { IconButton } from "@chakra-ui/react"
 import { FcLike } from "react-icons/fc";
 import { FcViewDetails } from "react-icons/fc";
 
+import getRandomColor from "@/utils/getRandomColor"
+
 export interface Props {
   id: string;
   thumbnail: string;
-  season: string;
+  season: string | null;
   yearStart: number;
   title: string;
   type: string;
   goToDetails: Function;
 }
 
+const Component: React.FC<Props> = ({ id, thumbnail, yearStart, season, title, type, goToDetails }) => {
 
-function getRandomColor(): 'gray' | 'red' | 'orange' | 'yellow' | 'green' | 'teal' | 'blue' | 'cyan' | 'purple' | 'pink' | 'accent' {
-  const colors: Array<'gray' | 'red' | 'orange' | 'yellow' | 'green' | 'teal' | 'blue' | 'cyan' | 'purple' | 'pink' | 'accent'> = [
-    'gray', 'red', 'orange', 'yellow', 'green', 'teal', 'blue', 'cyan', 'purple', 'pink', 'accent'
-  ];
-  return _.sample(colors)!;
-}
-
-const Component: React.FC<Props> = ({ id, thumbnail, yearStart, season, title, type, goToDetails }) => (
-  <Card.Root maxW={'180px'} overflow="hidden">
+  return (<Card.Root maxW={'180px'} overflow="hidden">
 
     <Image
       src={thumbnail}
@@ -33,11 +28,11 @@ const Component: React.FC<Props> = ({ id, thumbnail, yearStart, season, title, t
 
     <Card.Body gap="2">
       <Card.Title lineClamp="3">
-        <Badge colorPalette={getRandomColor()}>{yearStart}</Badge>
-        <Badge colorPalette={getRandomColor()}>{season}</Badge>
+        {yearStart && <Badge colorPalette={getRandomColor()}>{yearStart}</Badge>}
+        {season && <Badge colorPalette={getRandomColor()}>{season}</Badge>}
       </Card.Title>
       <Card.Title lineClamp="3">{title}</Card.Title>
-      <Card.Description>{type}</Card.Description>
+      {type && <Card.Description>{type}</Card.Description>}
     </Card.Body>
 
     <Card.Footer>
@@ -51,7 +46,7 @@ const Component: React.FC<Props> = ({ id, thumbnail, yearStart, season, title, t
       </Flex>
     </Card.Footer>
 
-  </Card.Root>
-)
+  </Card.Root>)
+}
 
 export default Component;

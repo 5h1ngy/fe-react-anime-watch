@@ -9,7 +9,7 @@ export interface Item {
     id: string;
     title: string;
     type: string;
-    season: string;
+    season: string | null;
     year_start: number;
     image: Image;
 }
@@ -17,7 +17,6 @@ export interface Item {
 // Define the ResponseData interface
 export interface ResponseData {
     occurrences: Item[];
-    types: string[];
     total: number;
     page: number;
     limit: number;

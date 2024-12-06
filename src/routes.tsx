@@ -39,7 +39,7 @@ const routes: RouteObject[] = [
 
                     return null
                 },
-                element: withDynamicImport('Home', <Loading />).containers(),
+                element: withDynamicImport('Newest', <Loading />).containers(),
                 errorElement: <Error />,
             },
             {
@@ -63,7 +63,7 @@ const routes: RouteObject[] = [
                     const { occurrence } = state.containerDetails;
 
                     store.dispatch(actions.pageLanding.setHistory([
-                        { id: 'details', label: 'Details', current: false },
+                        { id: 'details', label: 'Details', current: true },
                         { id, label: occurrence.title, current: true }
                     ]));
 

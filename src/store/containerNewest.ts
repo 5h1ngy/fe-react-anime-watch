@@ -10,9 +10,8 @@ export interface State {
     limit: number;
     total: number;
     totalPages: number;
-    types: string[];
-    status: STATUS,
-    error: any,
+    status: STATUS;
+    error: any;
 }
 
 export interface Actions {
@@ -21,28 +20,24 @@ export interface Actions {
 
 // Definisci la chiamata asincrona per ottenere i dati dal server
 const doGetNewest = createAsyncThunk(
-    'container/home/doGetNewest',
+    'container/newest/doGetNewest',
     async (payload: { page: number, limit: number }) => {
         return await getNewest(payload);
     }
 );
 
-const homeSlice = createSlice({
-    name: 'container/home',
+const newestSlice = createSlice({
+    name: 'container/newest',
     initialState: {
         status: STATUS.IDLE,
         error: null,
         occurrences: [],
         page: 1,
-        limit: 10,
+        limit: 20,
         total: 10,
         totalPages: 1,
-        types: [],
     } as State,
     reducers: {
-        // addItem: (state, action) => {
-        //     state.occurrences.push(action.payload);
-        // },
         // removeItem: (state, action) => {
         //     state.occurrences = state.occurrences.filter(item => item.id !== action.payload.id);
         // },
@@ -69,7 +64,6 @@ const homeSlice = createSlice({
                 state.limit = action.payload.limit;
                 state.total = action.payload.total;
                 state.totalPages = action.payload.totalPages;
-                state.types = action.payload.types;
             })
             .addCase(doGetNewest.rejected, (state, action) => {
                 state.status = STATUS.FAILED;
@@ -79,8 +73,8 @@ const homeSlice = createSlice({
 });
 
 export const actions = {
-    ...homeSlice.actions,
+    ...newestSlice.actions,
     doGetNewest,
 };
 
-export default homeSlice.reducer;
+export default newestSlice.reducer;
