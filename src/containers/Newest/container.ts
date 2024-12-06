@@ -6,7 +6,7 @@ import { State, actions } from '@/store';
 const mapStateToProps = (state: State) => ({
     landing: state.pageLanding,
     newest: state.containerNewest,
-    details: state.containerDetails,
+    // details: state.containerDetails,
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

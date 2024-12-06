@@ -4,10 +4,12 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 
 import { Center, createListCollection } from "@chakra-ui/react"
 import { Text, HStack, Flex, Spacer } from "@chakra-ui/react";
+import { Button, For } from "@chakra-ui/react"
 
 import { PaginationNextTrigger, PaginationPageText, PaginationPrevTrigger, PaginationRoot } from "@/components/Chakra/pagination"
 import { SelectContent, SelectItem, SelectRoot, SelectTrigger, SelectValueText } from "@/components/Chakra/select"
 import { BreadcrumbCurrentLink, BreadcrumbLink, BreadcrumbRoot } from "@/components/Chakra/breadcrumb"
+import { toaster } from "@/components/Chakra/toaster"
 
 import { History } from "@/store/pageLanding";
 import { STATUS as STATUS_NEWEST } from "@/store/containerNewest";
@@ -85,6 +87,17 @@ const Component: React.FC<Props & WithRouterProps> = ({ router, state, actions, 
         router.navigate(`/details/${id}`)
     }
 
+    function addToFavorites(title: string, id: string) {
+        toaster.create({
+            title: `${title} Add to favorites `,
+            type: 'success',
+            action: {
+                label: "Undo",
+                onClick: () => console.log("Undo"),
+            },
+        })
+    }
+
     {/** Navigation History Component */ }
     const NavigationHistory: React.FC = () => state.landing.history.length != 0 && <BreadcrumbRoot size={"lg"}>
         {state.landing.history.map(history =>
@@ -131,6 +144,7 @@ const Component: React.FC<Props & WithRouterProps> = ({ router, state, actions, 
                     yearStart={occurrence.year_start}
                     season={occurrence.season}
                     goToDetails={onGoToDetails}
+                    addToFavorites={addToFavorites}
                 />
             </div>
         ))}

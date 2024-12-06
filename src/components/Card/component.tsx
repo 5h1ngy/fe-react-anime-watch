@@ -15,9 +15,10 @@ export interface Props {
   title: string;
   type: string;
   goToDetails: Function;
+  addToFavorites: Function;
 }
 
-const Component: React.FC<Props> = ({ id, thumbnail, yearStart, season, title, type, goToDetails }) => {
+const Component: React.FC<Props> = ({ id, thumbnail, yearStart, season, title, type, goToDetails, addToFavorites }) => {
 
   return (<Card.Root maxW={'180px'} overflow="hidden">
 
@@ -41,7 +42,7 @@ const Component: React.FC<Props> = ({ id, thumbnail, yearStart, season, title, t
           <FcViewDetails onClick={() => goToDetails(id)} />
         </IconButton>
         <IconButton aria-label="Add to my list" variant="ghost" size="xs">
-          <FcLike />
+          <FcLike onClick={() => addToFavorites(title, id)} />
         </IconButton>
       </Flex>
     </Card.Footer>

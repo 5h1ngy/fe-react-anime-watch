@@ -4,6 +4,7 @@ import { Flex } from "@chakra-ui/react"
 import { Spacer } from "@chakra-ui/react"
 import { Tabs, Image } from "@chakra-ui/react"
 
+import { Toaster, toaster } from "@/components/Chakra/toaster"
 import { ColorModeButtonExtended } from "@/components/Chakra/color-mode"
 
 interface NavbarItems {
@@ -88,6 +89,9 @@ export default function Component(props: ComponentProps) {
             />
 
             {children !== undefined && children}
+
+            <Toaster />
+
         </Flex>
     </Flex>
 }
