@@ -16,9 +16,9 @@ export interface Item {
     title: string;
     type: string;
     episodes: number;
-    season: string;
-    year_start: number;
-    year_end: number;
+    season: string | null;
+    year_start: number | null;
+    year_end: number | null;
     image: Image;
     tags: Tag[];
     description: string | null;

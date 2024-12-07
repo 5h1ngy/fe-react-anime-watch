@@ -43,7 +43,7 @@ const Component: React.FC<Bind & WithRouterProps> = ({ state }) => {
                         />
                     </Flex>
 
-                    <Flex direction={"column"} width={{ base: "center", md: 'start', lg: 'start', xl: 'start', "2xl": 'start' }} gap={'0.4rem'}>
+                    <Flex direction={"column"} width={{ base: "none", sm: "none", md: "50%", lg: '50%', xl: '50%', "2xl": '50%' }} gap={'0.4rem'}>
 
                         <Flex direction={"row"} gap={"1rem"}>
                             <Text textStyle="md">{occurrence!.season} {occurrence!.year_start}</Text>

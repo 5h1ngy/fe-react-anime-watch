@@ -3,7 +3,7 @@ export default {
         "id": "6a7daba0-5952-4d2e-8e3f-bdffe9ccf1ae",
         "title": "Aharen-san wa Hakarenai Season 2",
         "type": "TV Series",
-        "episodes": "1",
+        "episodes": 1,
         "season": null,
         "year_start": null,
         "year_end": null,

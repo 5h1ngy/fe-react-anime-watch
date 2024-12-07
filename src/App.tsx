@@ -23,6 +23,7 @@ const App: React.FC = () => {
                 </Helmet>
             </HelmetProvider>
             <RouterProvider router={createBrowserRouter(routes, {
+                basename: import.meta.env.VITE_BASENAME,
                 // https://reactrouter.com/en/main/routers/create-browser-router#optsfuture
                 future: {
                     v7_fetcherPersist: true,
