@@ -48,6 +48,18 @@ const Component: React.FC<Bind & WithRouterProps> = ({ router, state, actions, }
         actions.containerNewest.doGetNewest({ page: state.containerNewest.page, limit: parseFloat(pageSize[0]) });
     }
 
+    function onTypeChange(args: any) {
+        const { value: type } = args as { items: typeof Proxy[]; value: string[] };
+
+        actions.containerSearchForm.setCurrentType(type[0]);
+
+        actions.containerNewest.doGetNewest({
+            page: state.containerNewest.page,
+            limit: state.containerNewest.limit,
+            type: type[0],
+        });
+    }
+
     function onGoToDetails(id: string) {
         router.navigate(`/details/${id}`)
     }
@@ -81,6 +93,22 @@ const Component: React.FC<Bind & WithRouterProps> = ({ router, state, actions, }
         }
     }
 
+    const SearchForm: React.FC = () => <>
+        <SelectRoot size={'sm'} collection={pages} width={'8rem'}
+            defaultValue={state.containerSearchForm.currentType !== "" ? [`${state.containerSearchForm.currentType}`] : undefined}
+            onValueChange={onTypeChange}
+        >
+            <SelectTrigger>
+                <SelectValueText placeholder={state.containerSearchForm.currentType || 'type'} />
+            </SelectTrigger>
+            <SelectContent>
+                {state.containerSearchForm.types.map((item) => <SelectItem item={item} key={item} >
+                    {item}
+                </SelectItem>)}
+            </SelectContent>
+        </SelectRoot>
+    </>
+
     {/** Pagination */ }
     const Pagination: React.FC = () => <>
         <PaginationRoot width={'fit-content'}
@@ -112,7 +140,7 @@ const Component: React.FC<Bind & WithRouterProps> = ({ router, state, actions, }
         </SelectRoot>
     </>
 
-    const Actions: React.FC<{ id: string, title: string  }> = ({ id, title }) => <Flex gap="2" wrap='wrap'>
+    const Actions: React.FC<{ id: string, title: string }> = ({ id, title }) => <Flex gap="2" wrap='wrap'>
 
         <IconButton onClick={() => onGoToDetails(id)} aria-label="Details" variant="surface" size="xs">
             <FcViewDetails />
@@ -140,6 +168,8 @@ const Component: React.FC<Bind & WithRouterProps> = ({ router, state, actions, }
     </Flex>
 
     useEffect(() => {
+        actions.containerSearchForm.doGetTypes();
+
         actions.containerNewest.doGetNewest({
             page: state.containerNewest.page,
             limit: state.containerNewest.limit
@@ -179,8 +209,8 @@ const Component: React.FC<Bind & WithRouterProps> = ({ router, state, actions, }
 
                 {/** ActionBar */}
                 <Flex wrap="wrap" gap="4" width={'100%'} justifyContent={"end"}>
-                    {/** Navigation History */}
-                    {/* <NavigationHistory /> */}
+                    {/** Search Form */}
+                    <SearchForm />
                     {/** Spacer */}
                     <Spacer />
                     {/** Pagination */}

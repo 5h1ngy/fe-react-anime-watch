@@ -1,37 +1,30 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getDetails } from '@/services/details';
-import { Item } from "@/services/details.types";
+import { getTypes } from '@/services/anime';
 
 export enum STATUS { IDLE, LOADING, SUCCESS, FAILED }
 
 export interface State {
-    occurrence: Item | null,
-    status: STATUS,
-    error: any,
+    types: Array<string>,
+    currentType: string,
+    status: STATUS;
+    error: any;
 }
 
 // Definisci la chiamata asincrona per ottenere i dati dal server
-const doGetDetails = createAsyncThunk(
-    'container/details/doGetDetails',
-    async (payload: { id: string }) => {
-        return await getDetails(payload);
-    }
-);
+const doGetTypes = createAsyncThunk('container/search-form/doGetTypes', async () => await getTypes());
 
-const detailsSlice = createSlice({
-    name: 'container/details',
+const newestSlice = createSlice({
+    name: 'container/search-form',
     initialState: {
-        occurrence: null,
+        types: [],
+        currentType: '',
         status: STATUS.IDLE,
         error: null,
     } as State,
     reducers: {
-        // addItem: (state, action) => {
-        //     state.occurrences.push(action.payload);
-        // },
-        // removeItem: (state, action) => {
-        //     state.occurrences = state.occurrences.filter(item => item.id !== action.payload.id);
-        // },
+        setCurrentType: (state, action) => {
+            state.currentType = action.payload;
+        },
         // updateItem: (state, action) => {
         //     const index = state.occurrences.findIndex(item => item.id === action.payload.id);
         //     if (index !== -1) {
@@ -44,14 +37,14 @@ const detailsSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(doGetDetails.pending, (state) => {
+            .addCase(doGetTypes.pending, (state) => {
                 state.status = STATUS.LOADING;
             })
-            .addCase(doGetDetails.fulfilled, (state, action) => {
+            .addCase(doGetTypes.fulfilled, (state, action) => {
                 state.status = STATUS.SUCCESS;
-                state.occurrence = action.payload.occurrence;
+                state.types = action.payload;
             })
-            .addCase(doGetDetails.rejected, (state, action) => {
+            .addCase(doGetTypes.rejected, (state, action) => {
                 state.status = STATUS.FAILED;
                 state.error = action.error.message;
             });
@@ -59,8 +52,8 @@ const detailsSlice = createSlice({
 });
 
 export const actions = {
-    ...detailsSlice.actions,
-    doGetDetails,
+    ...newestSlice.actions,
+    doGetTypes,
 };
 
-export default detailsSlice.reducer;
+export default newestSlice.reducer;

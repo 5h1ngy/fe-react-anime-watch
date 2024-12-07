@@ -14,14 +14,10 @@ export interface State {
     error: any;
 }
 
-export interface Actions {
-    doGetNewest: typeof doGetNewest,
-}
-
 // Definisci la chiamata asincrona per ottenere i dati dal server
 const doGetNewest = createAsyncThunk(
     'container/newest/doGetNewest',
-    async (payload: { page: number, limit: number }) => {
+    async (payload: { page: number, limit: number, type?: string }) => {
         return await getNewest(payload);
     }
 );
