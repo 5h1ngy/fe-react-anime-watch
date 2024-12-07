@@ -30,10 +30,6 @@ export interface State {
     }
 }
 
-export interface Actions {
-    doGetReferences: typeof doGetReferences,
-}
-
 export const saveReferencesMiddleware: Middleware = (store) => (next) => (action) => {
     const result = next(action); // Passa l'azione al prossimo middleware/reducer
 

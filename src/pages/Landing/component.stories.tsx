@@ -1,39 +1,34 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { HiHome, HiBookmark, HiMagnifyingGlass } from "react-icons/hi2";
-
 import Component from './component';
+import { ComponentProps } from './component.types';
+import { MemoryRouter } from 'react-router-dom';
 
-const meta = {
-  title: 'Page/Preview',
+const meta: Meta<ComponentProps> = {
+  title: 'Pages/Landing',
   component: Component,
-  parameters: {
-    layout: 'fullscreen',
-  },
   tags: ['autodocs'],
-} satisfies Meta<typeof Component>;
-
-export default meta;
-type Story = StoryObj<typeof meta>;
-
-export const Default: Story = {
+  decorators: [
+    (Story) => (
+      <MemoryRouter initialEntries={['/']}>
+        <Story />
+      </MemoryRouter>
+    ),
+  ],
   args: {
     navbarItems: [
-      { icon: <HiHome />, label: 'Newset', value: '/home' },
-      { icon: <HiMagnifyingGlass />, label: 'Search', value: '/search' },
-      { icon: <HiBookmark />, label: 'My List', value: '/my-list' },
+      { label: 'Home', value: '/' },
+      { label: 'About', value: '/about' },
     ],
     navbarSubItems: [
-      { icon: <HiHome />, label: 'Overview', value: '/overview' },
-      { icon: <HiMagnifyingGlass />, label: 'Explore', value: '/explore' },
-      { icon: <HiBookmark />, label: 'Saved', value: '/saved' },
+      { label: 'Sub 1', value: '/sub1', icon: '🔗' },
+      { label: 'Sub 2', value: '/sub2', icon: '🔗' },
     ],
-    logo: 'https://via.placeholder.com/42', // Placeholder logo URL
-    decorationBody: 'https://via.placeholder.com/100x100', // Placeholder decoration image URL
-    children: (
-      <div>
-        <h1>Welcome to the Preview</h1>
-        <p>This is a sample body content for the Preview.</p>
-      </div>
-    ),
+    logo: 'https://via.placeholder.com/150',
+    decorationBody: 'https://via.placeholder.com/300',
   },
 };
+
+export default meta;
+type Story = StoryObj<ComponentProps>;
+
+export const Default: Story = {};

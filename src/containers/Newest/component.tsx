@@ -3,22 +3,25 @@ import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 
 import { Center, createListCollection } from "@chakra-ui/react"
-import { Text, HStack, Flex, Spacer } from "@chakra-ui/react";
+import { Text, HStack, Spacer } from "@chakra-ui/react";
+import { Flex, IconButton } from "@chakra-ui/react"
+import { FcLike } from "react-icons/fc";
+import { FcViewDetails } from "react-icons/fc";
 
 import { PaginationNextTrigger, PaginationPageText, PaginationPrevTrigger, PaginationRoot } from "@/components/Chakra/pagination"
 import { SelectContent, SelectItem, SelectRoot, SelectTrigger, SelectValueText } from "@/components/Chakra/select"
-import { BreadcrumbCurrentLink, BreadcrumbLink, BreadcrumbRoot } from "@/components/Chakra/breadcrumb"
 import { toaster } from "@/components/Chakra/toaster"
 
 import { STATUS as STATUS_NEWEST } from "@/store/containerNewest";
 import { STATUS_REFERENCE } from "@/store/containerMyList";
-import withRouter, { WithRouterProps } from "@/hocs/withRouter";
+import { WithRouterProps } from "@/hocs/withRouter";
 import Card from "@/components/Card"
-import { ComponentProps } from "./component.types";
+
+import { Bind } from "./container"
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Component: React.FC<ComponentProps & WithRouterProps> = ({ router, state, actions, }) => {
+const Component: React.FC<Bind & WithRouterProps> = ({ router, state, actions, }) => {
 
     const cardsRef = useRef<HTMLDivElement[]>([]);
 
@@ -66,8 +69,7 @@ const Component: React.FC<ComponentProps & WithRouterProps> = ({ router, state, 
                 id,
             })
         } else {
-            
-            
+
             toaster.create({
                 title: `${title} Already inside your list `,
                 type: 'error',
@@ -78,15 +80,6 @@ const Component: React.FC<ComponentProps & WithRouterProps> = ({ router, state, 
             })
         }
     }
-
-    {/** Navigation History Component */ }
-    const NavigationHistory: React.FC = () => state.pageLanding.history.length != 0 && <BreadcrumbRoot size={"lg"}>
-        {state.pageLanding.history.map(history =>
-            !history.current
-                ? <BreadcrumbLink key={crypto.randomUUID()} href="#">{history.label}</BreadcrumbLink>
-                : <BreadcrumbCurrentLink key={crypto.randomUUID()}>{history.label}</BreadcrumbCurrentLink>
-        )}
-    </BreadcrumbRoot>
 
     {/** Pagination */ }
     const Pagination: React.FC = () => <>
@@ -119,6 +112,17 @@ const Component: React.FC<ComponentProps & WithRouterProps> = ({ router, state, 
         </SelectRoot>
     </>
 
+    const Actions: React.FC<{ id: string, title: string  }> = ({ id, title }) => <Flex gap="2" wrap='wrap'>
+
+        <IconButton onClick={() => onGoToDetails(id)} aria-label="Details" variant="surface" size="xs">
+            <FcViewDetails />
+        </IconButton>
+
+        {<IconButton onClick={() => addToFavorites!(title, id)} aria-label="Add to my list" variant="ghost" size="xs">
+            <FcLike />
+        </IconButton>}
+    </Flex>
+
     const Cards: React.FC = () => <Flex wrap={'wrap'} gap='2rem' align="stretch" justify={"start"}>
         {state.containerNewest.occurrences.map((occurrence, index) => (
             <div key={crypto.randomUUID()} ref={(el) => (cardsRef.current[index] = el!)}>
@@ -129,8 +133,7 @@ const Component: React.FC<ComponentProps & WithRouterProps> = ({ router, state, 
                     type={occurrence.type}
                     yearStart={occurrence.year_start}
                     season={occurrence.season}
-                    goToDetails={onGoToDetails}
-                    addToFavorites={addToFavorites}
+                    actions={<Actions id={occurrence.id} title={occurrence.title} />}
                 />
             </div>
         ))}
@@ -197,4 +200,4 @@ const Component: React.FC<ComponentProps & WithRouterProps> = ({ router, state, 
     </>
 }
 
-export default withRouter(Component);
+export default Component;

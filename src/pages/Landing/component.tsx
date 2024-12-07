@@ -1,4 +1,4 @@
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import { useLocation } from 'react-router-dom';
 
 import { Flex } from "@chakra-ui/react"
@@ -20,6 +20,7 @@ function findMatchingNavbarValue(location: string, items: NavbarSubItem[]): stri
 export default function Component(props: ComponentProps) {
     const { children, navbarItems, navbarSubItems, logo, decorationBody } = props
     const location = useLocation();
+    const navigate = useNavigate();
 
     const Logo: React.FC = () => logo &&
         <Image src={logo} width={'42px'} />
@@ -66,12 +67,14 @@ export default function Component(props: ComponentProps) {
                 defaultValue={findMatchingNavbarValue(location.pathname, navbarSubItems)}
                 variant={"line"}
                 size={"sm"}
+                onValueChange={(details: { value: string }) => {
+                    navigate(details.value)
+                }}
             >
                 <Tabs.List>
                     {navbarSubItems.map(item => (
                         <Tabs.Trigger key={crypto.randomUUID()} value={item.value}>
-                            {item.icon}
-                            <NavLink to={item.value} end> {item.label}</NavLink>
+                            {item.icon} {item.label}
                         </Tabs.Trigger>
                     ))}
                 </Tabs.List>

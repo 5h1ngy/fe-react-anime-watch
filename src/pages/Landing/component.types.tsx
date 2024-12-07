@@ -1,13 +1,12 @@
 import { ReactElement } from "react"
 
 export interface NavbarItem {
-    icon: ReactElement
     label: string
     value: string
 }
 
 export interface NavbarSubItem {
-    icon: ReactElement
+    icon: ReactElement | string
     label: string
     value: string
 }

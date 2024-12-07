@@ -7,11 +7,13 @@ import { Separator } from "@chakra-ui/react"
 
 import getRandomColor from "@/utils/getRandomColor"
 import { STATUS } from "@/store/containerDetails";
-import withRouter, { WithRouterProps } from "@/hocs/withRouter";
+import { WithRouterProps } from "@/hocs/withRouter";
 import { BreadcrumbCurrentLink, BreadcrumbLink, BreadcrumbRoot } from "@/components/Chakra/breadcrumb";
-import { ComponentProps } from "./component.types";
 
-const Component: React.FC<ComponentProps & WithRouterProps> = ({ state, }) => {
+import { Bind } from "./container"
+
+const Component: React.FC<Bind & WithRouterProps> = ({ state }) => {
+
     const occurrence = useLoaderData()
 
     {/** Navigation History Component */ }
@@ -41,7 +43,7 @@ const Component: React.FC<ComponentProps & WithRouterProps> = ({ state, }) => {
                         />
                     </Flex>
 
-                    <Flex direction={"column"} width={{ base: "none", sm: "none", md: "50%", lg: '50%', xl: '50%', "2xl": '50%' }} gap={'0.4rem'}>
+                    <Flex direction={"column"} width={{ base: "center", md: 'start', lg: 'start', xl: 'start', "2xl": 'start' }} gap={'0.4rem'}>
 
                         <Flex direction={"row"} gap={"1rem"}>
                             <Text textStyle="md">{occurrence!.season} {occurrence!.year_start}</Text>
@@ -75,4 +77,4 @@ const Component: React.FC<ComponentProps & WithRouterProps> = ({ state, }) => {
     </>
 }
 
-export default withRouter(Component);
+export default Component;

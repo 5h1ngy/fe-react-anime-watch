@@ -9,9 +9,7 @@ export interface WithRouterProps {
 }
 
 // HOC per aggiungere le proprietà di routing
-export default function withRouter<P>(
-    WrappedComponent: ComponentType<P & WithRouterProps>
-): React.FC<P> {
+export default function withRouter<P>(WrappedComponent: ComponentType<P & WithRouterProps>): React.FC<P> {
     const RouterComponent: React.FC<P> = (props) => {
         const location = useLocation();
         const navigate = useNavigate();
