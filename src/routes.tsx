@@ -14,8 +14,8 @@ const routes: RouteObject[] = [
         id: "root",
         path: "/",
         element: withDynamicImport('Landing', <Loading />).pages({
-            logo: "/logo.png",
-            decorationBody: "/decoration.png",
+            logo: `${import.meta.env.VITE_BASENAME}/logo.png`,
+            decorationBody: `${import.meta.env.VITE_BASENAME}/decoration.png`,
             children: <Outlet />,
             navbarItems: [
                 { icon: <HiHome />, label: "About", value: '/about' },

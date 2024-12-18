@@ -10,7 +10,7 @@ import routes from '@/routes'
 
 const App: React.FC = () => {
 
-    const imgUrl = new URL('/public/logo.png', import.meta.url).href
+    const imgUrl = new URL(`${import.meta.env.VITE_BASENAME}/logo.png`, import.meta.url).href
 
     return <Provider store={store}>
         <ThemeProvider>
