@@ -16,7 +16,7 @@ export async function getDetails(payload: { id: string }): Promise<ResponseData>
 
     try {
         // Chiamata al servizio tramite Axios
-        const response = await axios.get<ResponseData>(`/api/anime/details/${payload.id}`);
+        const response = await axios.get<ResponseData>(`/api/be-node-anime-watch/anime/details/${payload.id}`);
 
         // Estrazione dei tipi e ritorno dei dati
         const dataWithTypes = {

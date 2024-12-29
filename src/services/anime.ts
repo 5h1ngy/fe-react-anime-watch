@@ -15,7 +15,7 @@ export async function getNewest(payload: { page: number, limit: number, type?: s
 
     try {
         // Chiamata al servizio tramite Axios
-        let defaultQuery = `/api/anime?offset=${payload.page}&size=${payload.limit}`;
+        let defaultQuery = `/api/be-node-anime-watch/anime?offset=${payload.page}&size=${payload.limit}`;
         if (payload.type) defaultQuery = defaultQuery + `&type=${payload.type}`
         const response = await axios.get<ResponseData>(defaultQuery);
 
@@ -39,7 +39,7 @@ export async function getTypes(): Promise<Array<string>> {
 
     try {
         // Chiamata al servizio tramite Axios
-        const response = await axios.get<Array<string>>(`/api/anime/types`);
+        const response = await axios.get<Array<string>>(`/api/be-node-anime-watch/anime/types`);
 
         // Estrazione dei tipi e ritorno dei dati
         const dataWithTypes = response.data;
@@ -62,7 +62,7 @@ export async function getReferences(payload: { ids: Array<string> }): Promise<Re
     try {
         // Chiamata al servizio tramite Axios
         const response = await axios.post<ResponseData>(
-            `/api/anime`,
+            `/api/be-node-anime-watch/anime`,
             { ids: payload.ids }
         );
 
