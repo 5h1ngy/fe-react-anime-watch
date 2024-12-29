@@ -12,6 +12,13 @@ const config: StorybookConfig = {
     name: "@storybook/react-vite",
     options: {},
   },
+  async viteFinal(config) {
+    const { mergeConfig } = await import('vite');
+
+    return mergeConfig(config, {
+      base: "/storybook/fe-react-anime-watch",
+    });
+  },
   refs: {
     '@chakra-ui/react': {
       disable: true, // Disabilita le storie di Chakra UI
