@@ -42,7 +42,7 @@
     "build:prod": "tsc -b && vite build --mode prod --outDir build/fe-react-anime-watch",
     "start:storybook": "storybook dev -p 6006 --no-open",
     "build:storybook": "storybook build --output-dir build/storybook/fe-react-anime-watch",
-    "clean": "rm -rfdv build node_modules .yarn"
+    "clean": "rm -rfdv build node_modules .yarn .yarn-cache"
   },
   "devDependencies": {
     "@chakra-ui/react": "^3.2.2",
